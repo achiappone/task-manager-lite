@@ -3,6 +3,11 @@
 Simple, fast Kanban board built with **React + TypeScript + Zustand + dnd-kit**.  
 Create, edit, and drag tasks between columns. State persists in `localStorage`.
 
+## 📸 Screenshot
+
+![Task Manager Lite Screenshot](docs/screenshot.png)
+
+
 ## ✨ Features
 - Drag & drop reordering and column moves
 - Create / edit / delete tasks
