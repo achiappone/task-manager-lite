@@ -5,7 +5,7 @@ Create, edit, and drag tasks between columns. State persists in `localStorage`.
 
 ## 📸 Screenshot
 
-![Task Manager Lite Screenshot](docs/screenshot.png)
+![Task Manager Lite Screenshot](docs/Screenshot.png)
 
 
 ## ✨ Features
