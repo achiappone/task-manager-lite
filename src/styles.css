@@ -50,6 +50,8 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 200px;
+    /* Prevent children from leaking visually */
+  overflow: hidden;
 }
 
 .column-header {
@@ -84,8 +86,23 @@ body {
   display: flex;
   flex-direction: column;
   gap: 8px;
+    /* Ensure child cards stay within the border curve */
+  overflow-y: auto;
+  border-radius: inherit;
+
 }
-.column-body.dropping { outline: 2px dashed var(--accent); outline-offset: -4px; border-radius: 10px; }
+.column-body.dropping { outline: 2px dashed orange; outline-offset: -4px; border-radius: 10px; }
+
+.column-body::-webkit-scrollbar {
+  width: 6px;
+}
+.column-body::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 10px;
+}
+.column-body::-webkit-scrollbar-thumb:hover {
+  background: orange;
+}
 
 .task-card {
   background: #1b2030;
