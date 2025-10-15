@@ -52,6 +52,7 @@ body {
   min-height: 200px;
     /* Prevent children from leaking visually */
   overflow: hidden;
+  min-width: 0;
 }
 
 .column-header {
@@ -91,7 +92,12 @@ body {
   border-radius: inherit;
 
 }
-.column-body.dropping { outline: 2px dashed orange; outline-offset: -4px; border-radius: 10px; }
+.column-body.dropping { 
+  outline: 2px dashed orange; 
+  outline-offset: -4px; 
+  border-radius: 10px;
+  box-shadow: inset 0 0 0 2px orange;
+}
 
 .column-body::-webkit-scrollbar {
   width: 6px;
@@ -109,6 +115,7 @@ body {
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 10px;
+  word-break: break-word;
 }
 .task-title { font-weight: 600; margin-bottom: 4px; color: orange; }
 .task-desc { color: var(--muted); font-size: 0.9rem; margin-bottom: 8px; }
