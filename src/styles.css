@@ -77,7 +77,7 @@ body {
   border-radius: 8px;
   cursor: pointer;
 }
-.column-actions button:hover { border-color: var(--accent); }
+.column-actions button:hover { border-color: orange; }
 
 .column-body {
   padding: 10px;
@@ -105,7 +105,7 @@ body {
   cursor: pointer;
   font-size: 0.85rem;
 }
-.task-actions button:hover { border-color: var(--accent); }
+.task-actions button:hover { border-color: orange; }
 
 .board-meta {
   margin-top: 10px;
