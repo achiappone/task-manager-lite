@@ -32,7 +32,7 @@ body {
   border-radius: 10px;
   cursor: pointer;
 }
-.board-toolbar button:hover { border-color: var(--accent); }
+.board-toolbar button:hover { border-color: orange; }
 
 .board {
   display: grid;
