@@ -1,8 +1,11 @@
 import Board from "./components/Board";
 import "./styles.css";
 import { ErrorBoundary } from "./ErrorBoundary";
+import { useCloudBackupLifecycle } from "./hooks/useCloudBackup";
 
 export default function App() {
+  useCloudBackupLifecycle();
+
   return (
     <div className="container">
       <header className="header">

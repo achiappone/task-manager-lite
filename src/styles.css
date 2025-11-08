@@ -23,7 +23,18 @@ body {
 .header h1 { margin: 0 0 4px 0; font-weight: 700; }
 .header p { margin: 0; color: var(--muted); }
 
-.board-toolbar { display: flex; gap: 8px; margin: 8px 0 12px; }
+.board-toolbar {
+  display: flex;
+  gap: 8px;
+  margin: 8px 0 12px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+.toolbar-group {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
 .board-toolbar button {
   background: var(--panel);
   border: 1px solid var(--border);
@@ -33,6 +44,20 @@ body {
   cursor: pointer;
 }
 .board-toolbar button:hover { border-color: orange; }
+.board-toolbar button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.cloud-status {
+  margin: 0 0 12px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.cloud-status.cloud-success { color: #4ade80; }
+.cloud-status.cloud-error { color: #f87171; }
+.cloud-status.cloud-saving,
+.cloud-status.cloud-restoring { color: orange; }
 
 .board {
   display: grid;

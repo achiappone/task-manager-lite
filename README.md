@@ -24,3 +24,16 @@ Create, edit, and drag tasks between columns. State persists in `localStorage`.
 ```bash
 npm install
 npm run dev
+```
+
+## Cloud Backups
+1. Create a `.env` file in the project root and add your API key:
+   ```
+   VITE_BACKUP_API_KEY=your-secret-key
+   ```
+2. (Optional) Override the API base URL if you are testing against a different host:
+   ```
+   VITE_BACKUP_API_BASE=https://api.anthonychiappone.com
+   ```
+3. Restart the dev server after editing environment variables.
+4. Use the **Save to Cloud** / **Restore from Cloud** buttons inside the board toolbar. The app automatically pulls the latest backup on initial load and performs a debounced auto-backup (about every 90 seconds) while you make changes.

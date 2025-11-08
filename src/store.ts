@@ -151,3 +151,15 @@ export const useStore = create<Store>()(
     { name: "task-manager-lite-state" }
   )
 );
+
+export const selectBoardState = (state: Store): BoardState => ({
+  columns: state.columns,
+  tasks: state.tasks,
+});
+
+export const getBoardStateSnapshot = (): BoardState =>
+  selectBoardState(useStore.getState());
+
+export const replaceBoardState = (next: BoardState) => {
+  useStore.setState({ columns: next.columns, tasks: next.tasks });
+};
