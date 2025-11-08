@@ -10,13 +10,18 @@ export default function App() {
     <div className="container">
       <header className="header">
         <h1>Task Manager</h1>
-        <p>Simple Kanban with drag-and-drop and local save.</p>
+        <p>Simple Kanban with drag-and-drop and local save. Local Storage 
+           gets backed up to the Cloud server</p>
       </header>
       <ErrorBoundary>
         <Board />
       </ErrorBoundary>
       <footer className="footer">
-        <small>Built with React, TypeScript, Zustand, and dnd-kit.</small>
+        <small>Built with React, TypeScript, Zustand, and dnd-kit.
+          Backed up to cloud server. PostgreSQL database. Runs on 
+          privately built and hosted infrastructure. Database communication 
+          protected through docker container via API.
+        </small>
       </footer>
     </div>
   );
