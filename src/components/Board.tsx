@@ -1,11 +1,20 @@
 // src/components/Board.tsx
 import {
-  DndContext, MouseSensor, TouchSensor,
-  useSensor, useSensors
+  DndContext,
+  MouseSensor,
+  TouchSensor,
+  useSensor,
+  useSensors,
 } from "@dnd-kit/core";
 import type { DragEndEvent, DragOverEvent } from "@dnd-kit/core";
-import { useStore } from "../store";
+import { useState } from "react";
+import { useStore, getBoardStateSnapshot, replaceBoardState } from "../store";
 import Column from "./Column";
+import {
+  createBackup,
+  fetchLatestBackup,
+  isCloudBackupConfigured,
+} from "../lib/cloudBackup";
 
 export default function Board() {
   const columns = useStore(s => s.columns);
@@ -15,6 +24,16 @@ export default function Board() {
   const reorderColumns = useStore(s => s.reorderColumns);
   const addColumn = useStore(s => s.addColumn);
   const resetDemo = useStore(s => s.resetDemo);
+  const cloudEnabled = isCloudBackupConfigured();
+
+  type CloudState = "idle" | "saving" | "restoring" | "success" | "error";
+  const [cloudStatus, setCloudStatus] = useState<{
+    state: CloudState;
+    message?: string;
+  }>({ state: cloudEnabled ? "idle" : "error", message: cloudEnabled ? undefined : "Set VITE_BACKUP_API_KEY to enable cloud backups." });
+
+  const isSaving = cloudStatus.state === "saving";
+  const isRestoring = cloudStatus.state === "restoring";
 
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance: 5 } }),
@@ -68,15 +87,92 @@ export default function Board() {
     }
   }
 
+  async function handleSaveToCloud() {
+    if (!cloudEnabled) {
+      setCloudStatus({
+        state: "error",
+        message: "Set VITE_BACKUP_API_KEY to enable cloud backups.",
+      });
+      return;
+    }
+
+    setCloudStatus({ state: "saving", message: "Saving to cloud..." });
+    try {
+      const payload = getBoardStateSnapshot();
+      const record = await createBackup(payload);
+      const createdAt = new Date(record.createdAt).toLocaleString();
+      setCloudStatus({
+        state: "success",
+        message: `Saved at ${createdAt}`,
+      });
+    } catch (error) {
+      setCloudStatus({
+        state: "error",
+        message:
+          error instanceof Error ? error.message : "Save to cloud failed.",
+      });
+    }
+  }
+
+  async function handleRestoreFromCloud() {
+    if (!cloudEnabled) {
+      setCloudStatus({
+        state: "error",
+        message: "Set VITE_BACKUP_API_KEY to enable cloud backups.",
+      });
+      return;
+    }
+
+    setCloudStatus({ state: "restoring", message: "Restoring from cloud..." });
+    try {
+      const payload = await fetchLatestBackup();
+      if (!payload) {
+        setCloudStatus({
+          state: "error",
+          message: "No backup found.",
+        });
+        return;
+      }
+      replaceBoardState(payload);
+      setCloudStatus({
+        state: "success",
+        message: "Restored from latest cloud backup.",
+      });
+    } catch (error) {
+      setCloudStatus({
+        state: "error",
+        message:
+          error instanceof Error ? error.message : "Restore from cloud failed.",
+      });
+    }
+  }
+
   return (
     <div className="board-wrap">
       <div className="board-toolbar">
-        <button onClick={()=>{
-          const title = prompt("New column title");
-          if (title) addColumn(title);
-        }}>Add Column</button>
-        <button onClick={resetDemo}>Reset</button>
+        <div className="toolbar-group">
+          <button onClick={()=>{
+            const title = prompt("New column title");
+            if (title) addColumn(title);
+          }}>Add Column</button>
+          <button onClick={resetDemo}>Reset</button>
+        </div>
+
+        <div className="toolbar-group">
+          <button onClick={handleSaveToCloud} disabled={isSaving || isRestoring}>
+            {isSaving ? "Saving..." : "Save to Cloud"}
+          </button>
+          <button onClick={handleRestoreFromCloud} disabled={isSaving || isRestoring}>
+            {isRestoring ? "Restoring..." : "Restore from Cloud"}
+          </button>
+        </div>
       </div>
+
+      {cloudStatus.message && (
+        <div className={`cloud-status cloud-${cloudStatus.state}`}>
+          {cloudStatus.message}
+        </div>
+      )}
 
       <DndContext sensors={sensors} onDragOver={onDragOver} onDragEnd={onDragEnd}>
         <div className="board">
