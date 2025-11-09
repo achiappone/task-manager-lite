@@ -17,10 +17,11 @@ export default function App() {
         <Board />
       </ErrorBoundary>
       <footer className="footer">
-        <small>Built with React, TypeScript, Zustand, and dnd-kit.
-          Backed up to cloud server. PostgreSQL database. Runs on 
-          privately built and hosted infrastructure. Database communication 
-          protected through docker container via API.
+        <small>Built with React, TypeScript, Zustand, and dnd-kit. Backed up to cloud server.
+          PostgreSQL database. Runs on privately built and hosted infrastructure.
+        </small>
+
+        <small>Database communication protected through docker container via API.
         </small>
       </footer>
     </div>
