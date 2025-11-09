@@ -19,7 +19,7 @@ export default function App() {
         <footer className="footer">
           <small>
             Built with React, TypeScript, Zustand, and dnd-kit. Backed up to cloud server.<br />
-            PostgreSQL database. Runs on privately built and hosted infrastructure.<br />
+            PostgreSQL database. Runs on privately built and hosted infrastructure.<br /><br />
             Database communication protected through docker container via API.
           </small>
         </footer>
