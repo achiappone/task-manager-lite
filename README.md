@@ -27,7 +27,7 @@ npm run dev
 ```
 
 ## Cloud Backups
-1. Create a `.env` file in the project root and add your API key:
+1. Copy `.env.example` to `.env` and add your API key:
    ```
    VITE_BACKUP_API_KEY=your-secret-key
    ```
